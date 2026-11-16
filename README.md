@@ -1,0 +1,1 @@
+This project is a Vinted Assistant for automated titles and description writing with price checking and image recognition items (like brands etc.)
