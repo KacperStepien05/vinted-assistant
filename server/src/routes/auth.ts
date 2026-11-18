@@ -91,5 +91,11 @@ authRouter.post("/login", async (req, res) => {
         return
     }
 
-    res.status(200).json({ id: user.id, email: user.email })
+    req.session.regenerate((err) => {
+        if (err) {
+            throw err;
+        }
+        req.session.userId = user.id;
+        res.status(200).json({ id: user.id, email: user.email });
+    });
 })
