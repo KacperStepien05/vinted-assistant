@@ -42,3 +42,40 @@ Content-Type: application/json
   "email": "  TEST@Example.com ",
   "password": "supersecret"
 }
+
+### VALID EMAIL AND PASSWORD (GET)
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "supersecret"
+}
+
+### VALID EMAIL WRONG PASSWORD (GET)
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "supersecret1"
+}
+
+### WRONG EMAIL VALID PASSWORD (GET)
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "email": "test1@example.com",
+  "password": "supersecret"
+}
+
+
+### LOGIN OK
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "supersecret"
+}
