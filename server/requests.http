@@ -1,7 +1,26 @@
+### VALID EMAIL AND PASSWORD
 POST http://localhost:3000/auth/register
 Content-Type: application/json
 
 {
   "email": "test@example.com",
   "password": "supersecret"
+}
+
+### WRONG MAIL VALID PASSWORD
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+  "email": "testexample.com",
+  "password": "supersecret"
+}
+
+### VALID EMAIL WRONG PASSWORD
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+  "email": "test@examplee.com",
+  "password": "test"
 }
