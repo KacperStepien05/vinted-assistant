@@ -24,3 +24,21 @@ Content-Type: application/json
   "email": "test@examplee.com",
   "password": "test"
 }
+
+### DUPLICATE EMAIL
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "supersecret"
+}
+
+### DUPLICATE WITH DIFFERENT CASE + SPACES
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+  "email": "  TEST@Example.com ",
+  "password": "supersecret"
+}
