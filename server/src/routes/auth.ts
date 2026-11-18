@@ -54,5 +54,42 @@ authRouter.post("/register", async (req, res) => {
 
 
 
+const loginSchema = z.object({
+    email: z.string().trim().toLowerCase().pipe(z.email("Invalid email")),
+    password: z.string().min(1, "Password is required")
+});
 
 
+authRouter.post("/login", async (req, res) => {
+    const result = loginSchema.safeParse(req.body)
+
+    if(!result.success) {
+        res.status(400).json({ errors: z.flattenError(result.error) })
+        return
+    }
+
+    const { email, password } = result.data
+    
+    const [user] = await db
+        .select( { 
+            id: users.id,
+            email: users.email,
+            passwordHash: users.passwordHash,
+         } )
+        .from(users)
+        .where(eq(users.email, email))
+
+    if (!user) {
+        res.status(401).json({ error: "Invalid email or password" })
+        return
+    }
+
+    const passwordOk = await bcrypt.compare(password, user.passwordHash);
+
+    if (!passwordOk) {
+        res.status(401).json({ error: "Invalid email or password" })
+        return
+    }
+
+    res.status(200).json({ id: user.id, email: user.email })
+})
