@@ -135,3 +135,13 @@ authRouter.get("/me", requireAuth, async (req, res, next) => {
 })
 
 
+authRouter.post("/logout", requireAuth, (req, res, next) => {
+  req.session.destroy((err) => {
+    if (err) {
+        next(err);
+        return;
+    }
+    res.clearCookie("connect.sid");
+    res.status(204).end();
+  });
+});
