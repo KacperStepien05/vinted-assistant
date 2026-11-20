@@ -4,6 +4,7 @@ import bcrypt from "bcrypt";
 import { users } from "../db/schema.js";
 import { db } from "../db/index.js";
 import { eq } from "drizzle-orm";
+import { requireAuth } from "../middleware/requireAuth.js";
 
 export const authRouter = Router() 
 
@@ -60,7 +61,7 @@ const loginSchema = z.object({
 });
 
 
-authRouter.post("/login", async (req, res) => {
+authRouter.post("/login", async (req, res, next) => {
     const result = loginSchema.safeParse(req.body)
 
     if(!result.success) {
@@ -93,9 +94,44 @@ authRouter.post("/login", async (req, res) => {
 
     req.session.regenerate((err) => {
         if (err) {
-            throw err;
+            next(err);
+            return;
         }
         req.session.userId = user.id;
         res.status(200).json({ id: user.id, email: user.email });
     });
 })
+
+
+authRouter.get("/me", requireAuth, async (req, res, next) => {
+
+    const userId = req.session.userId;
+    if (!userId) {
+        res.status(401).json({ error: "Not authenticated" });
+        return;
+    }
+
+    const [user] = await db
+        .select( { 
+            id: users.id,
+            email: users.email,
+            createdAt: users.createdAt
+         } )
+        .from(users)
+        .where(eq(users.id, userId))
+
+    if (!user) {
+        req.session.destroy((err) => {
+        if (err) {
+            next(err);
+            return;
+        }
+        res.clearCookie("connect.sid");
+        res.status(401).json({ error: "Not authenticated" });
+        });
+        return;
+    }
+    res.status(200).json({ id: user.id, email: user.email, createdAt: user.createdAt })
+})
+
+

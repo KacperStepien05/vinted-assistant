@@ -79,3 +79,10 @@ Content-Type: application/json
   "email": "test@example.com",
   "password": "supersecret"
 }
+
+### ME (logged in)
+GET http://localhost:3000/auth/me
+
+### ME (fake cookie, should be 401)
+GET http://localhost:3000/auth/me
+Cookie: connect.sid=fake
