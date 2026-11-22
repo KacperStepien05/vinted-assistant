@@ -1,3 +1,3 @@
 export default function App() {
-  return <h1 className="text-3xl font-bold text-blue-600">Vinted Assistant</h1>;
+  return <h1 className="text-3xl font-bold text-blue-600">cwel</h1>;
 }
