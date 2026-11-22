@@ -19,7 +19,7 @@ authRouter.post("/register", async (req, res) => {
     const result = registerSchema.safeParse(req.body)
 
     if(!result.success) {
-        res.status(400).json({ errors: z.flattenError(result.error) })
+        res.status(400).json({ error: result.error.issues[0]?.message ?? "Invalid input" });
         return
     }
 
