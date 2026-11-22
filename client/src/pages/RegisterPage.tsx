@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, Link } from "react-router";
 
 export default function RegisterPage() {
 
@@ -36,6 +36,7 @@ export default function RegisterPage() {
             <input type="password" value={password} minLength={8} placeholder="********" onChange={(e) => setPassword(e.target.value)} required/>
             <button type="submit">Submit</button>
         </form>
+        <Link to="/login">Already have an account? Log in</Link>
     </>
     );
 }
