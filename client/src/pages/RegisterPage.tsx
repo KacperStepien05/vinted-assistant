@@ -11,13 +11,18 @@ export default function RegisterPage() {
 
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault()
-        const response = await fetch("/auth/register", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email, password }) })
-        const data = await response.json()
-        if(response.ok) {
-            navigate("/login")
-            return
+        try {
+            const response = await fetch("/auth/register", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email, password }) })
+            const data = await response.json().catch(() => null)
+            if(response.ok) {
+                navigate("/login")
+                return
+            }
+            setError(data?.error ?? "Registration failed")
+        } catch {
+        setError("Can't reach the server, check your connection");
         }
-        setError(data.error ?? "Registration failed")
+
     }
 
 
@@ -26,9 +31,9 @@ export default function RegisterPage() {
     <>
         <h1 className="text-2xl font-bold">Register</h1>
         {error && <p className="text-red-600">{error}</p>}
-        <form action="" onSubmit={handleSubmit}>
-            <input type="email" placeholder="jhon123@mail.com" onChange={(e) => setEmail(e.target.value)} />
-            <input type="password" placeholder="********" onChange={(e) => setPassword(e.target.value)}/>
+        <form onSubmit={handleSubmit}>
+            <input type="email" value={email} placeholder="jhon123@mail.com" onChange={(e) => setEmail(e.target.value)} required />
+            <input type="password" value={password} minLength={8} placeholder="********" onChange={(e) => setPassword(e.target.value)} required/>
             <button type="submit">Submit</button>
         </form>
     </>
