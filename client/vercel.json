@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/auth/:path*",
-      "destination": "https://YOUR-API.onrender.com/auth/:path*"
+      "destination": "https://vinted-assistant-api.onrender.com/auth/:path*"
     },
     {
       "source": "/(.*)",
