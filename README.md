@@ -1,5 +1,7 @@
 # Vinted Assistant
 
+**Live demo:** https://vinted-assistant-chi.vercel.app
+
 Web app that turns a photo of an item into a ready Vinted listing: AI recognizes the brand, size and condition, writes the title and description, and suggests a price.
 
 ## How to run locally
