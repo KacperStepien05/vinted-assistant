@@ -89,3 +89,44 @@ Cookie: connect.sid=fake
 
 ### LOGOUT
 POST http://localhost:3000/auth/logout
+
+### GET ITEMS
+GET http://localhost:3000/items
+
+### CREATE ITEM
+POST http://localhost:3000/items
+Content-Type: application/json
+
+{
+  "title": "Nike Tech Fleece hoodie",
+  "brand": "Nike",
+  "size": "M",
+  "buyPrice": 4000,
+  "listPrice": 8500
+}
+
+### CREATE ITEM (FAILED TITLE)
+POST http://localhost:3000/items
+Content-Type: application/json
+
+{
+  "title": ""
+}
+
+### CREATE ITEM - NEGATIVE PRICE (expect 400)
+POST http://localhost:3000/items
+Content-Type: application/json
+
+{
+  "title": "Test",
+  "listPrice": -5
+}
+
+### CREATE ITEM - DECIMAL PRICE (expect 400)
+POST http://localhost:3000/items
+Content-Type: application/json
+
+{
+  "title": "Test",
+  "listPrice": 49.99
+}

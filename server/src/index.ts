@@ -4,6 +4,7 @@ import { db } from "./db/index.js";
 import { authRouter } from "./routes/auth.js";
 import session from "express-session";
 import connectPgSimple from "connect-pg-simple";
+import { itemsRouter } from "./routes/items.js"
 
 const app = express()
 app.set("trust proxy", 1);
@@ -35,6 +36,7 @@ app.use(
 
 app.use(express.json())
 app.use("/auth", authRouter)
+app.use("/items", itemsRouter);
 
 const PORT = Number(process.env.PORT ?? 3000)
 
