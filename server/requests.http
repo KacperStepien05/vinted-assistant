@@ -89,3 +89,100 @@ Cookie: connect.sid=fake
 
 ### LOGOUT
 POST http://localhost:3000/auth/logout
+
+### GET ITEMS
+GET http://localhost:3000/items
+
+### CREATE ITEM
+POST http://localhost:3000/items
+Content-Type: application/json
+
+{
+  "title": "Nike Tech Fleece hoodie",
+  "brand": "Nike",
+  "size": "M",
+  "buyPrice": 4000,
+  "listPrice": 8500
+}
+
+### CREATE ITEM (FAILED TITLE)
+POST http://localhost:3000/items
+Content-Type: application/json
+
+{
+  "title": ""
+}
+
+### CREATE ITEM - NEGATIVE PRICE (expect 400)
+POST http://localhost:3000/items
+Content-Type: application/json
+
+{
+  "title": "Test",
+  "listPrice": -5
+}
+
+### CREATE ITEM - DECIMAL PRICE (expect 400)
+POST http://localhost:3000/items
+Content-Type: application/json
+
+{
+  "title": "Test",
+  "listPrice": 49.99
+}
+
+### GET ITEM WITH ID
+GET http://localhost:3000/items/1
+
+### GET ITEM WITH WRONG ID
+GET http://localhost:3000/items/999
+
+### GET ITEM WITH WRONG ID (NOT NUM)
+GET http://localhost:3000/items/abc
+
+### PATCH - CHANGE PRICE (expect 200)
+PATCH http://localhost:3000/items/1
+Content-Type: application/json
+
+{
+  "listPrice": 9000
+}
+
+### PATCH - MARK AS LISTED (expect 200, listedAt filled)
+PATCH http://localhost:3000/items/1
+Content-Type: application/json
+
+{
+  "status": "listed"
+}
+
+### PATCH - MARK AS SOLD (expect 200, soldAt + soldPrice filled)
+PATCH http://localhost:3000/items/1
+Content-Type: application/json
+
+{
+  "status": "sold",
+  "soldPrice": 8000
+}
+
+### PATCH - EMPTY BODY (expect 400)
+PATCH http://localhost:3000/items/1
+Content-Type: application/json
+
+{}
+
+### PATCH - INVALID STATUS (expect 400)
+PATCH http://localhost:3000/items/1
+Content-Type: application/json
+
+{
+  "status": "banana"
+}
+
+### PATCH - NOT FOUND (expect 404)
+PATCH http://localhost:3000/items/999
+Content-Type: application/json
+
+{
+  "listPrice": 1000
+}
