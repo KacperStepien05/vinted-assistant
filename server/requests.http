@@ -130,3 +130,12 @@ Content-Type: application/json
   "title": "Test",
   "listPrice": 49.99
 }
+
+### GET ITEM WITH ID
+GET http://localhost:3000/items/1
+
+### GET ITEM WITH WRONG ID
+GET http://localhost:3000/items/999
+
+### GET ITEM WITH WRONG ID (NOT NUM)
+GET http://localhost:3000/items/abc
